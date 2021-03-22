@@ -1,0 +1,129 @@
+<!-- https://www.youtube.com/watch?v=kDd33VxaxaY&t=323s -->
+<!--
+/**
+ * Q: What does this function print?
+ * A: prints 4, 5 times. 'number' is a global variable, i is declared with 'var' which is has 
+ * a function scope. 
+ */
+
+ let number;
+ for(var i = 0; i < 5; i++) {
+   number = i;
+   setTimeout(()=> {
+    console.log(number)
+   }, 1000)
+ }
+
+ /**
+ * Q: What does this function print?
+ * A: prints 5, 5 times. i gets to 5 inside of loop by the time the setTimout runs
+ */
+
+for(var i = 0; i < 5; i++) {
+  setTimeout(()=> {
+   console.log(i)
+  }, 1000)
+}
+
+/**
+ * Q: How can you adjust the functions above to print out desired result of 0,1,2,3,4 ? 
+ * A: Change 'var' to 'let'. This is due to scope of 'var' vs 'let', and asynchronous nature of setTimeOut()
+ */
+
+for(let i = 0; i < 5; i++) {
+  setTimeout(()=> {
+   console.log(i)
+  }, 1000)
+}
+
+/**
+ * Q: Create a user defined table, accepting rows and columns. 
+ * Need 2 inputs (for row and column) and a submit button. 
+ * row: 4
+ * col: 5
+ * 
+ * Print like this:
+ * colIndex:  0  1   2   3   4      // here for visual, not given in interview
+ * 
+            * 1  8   9   16  17
+            * 2  7   10  15  18
+            * 3  6   11  14  19
+            * 4  5   12  13  20
+ * 
+ * A: Notice its a 'zig-zag' pattern. Numbers increase down columns, then up cols.
+ * 1. Find formulas for computing even and odd columns of *first row*. This gives us baseline
+ *  for finding numbers below them.
+ *  first row
+ *    even col: row*colIndex + 1    (ex: 4*2 + 1 = 9 )
+ *    odd col : row*(colIndex+1)    (ex: 4*(4+1) = 16 )
+ * 
+ * 2. Find formulas for computing even and odd columns in rest of rows. Lets call our table 'matrix'
+ *  nth row
+ *    even col: matrix[rowIndex-1][colIndex] + 1    (ex: 9+1 = 10)
+ *    odd col : matrix[rowIndex-1][colIndex] - 1
+ */ 
+
+-->
+
+<body>
+  <form id="form">
+    <label>Number of Rows:</label>
+    <input id="row" />
+    <label>Number of Columns:</label>
+    <input id="col" />
+    <input type="submit" onclick="createTable()" id="button" />
+  </form>
+
+  <table id="zigzagTable">
+
+  </table>
+</body>
+<script>
+  document.querySelector("#button").addEventListener("click", (e)=> {
+    e.preventDefault();
+  })
+
+  function createTable () {
+    let rows = document.getElementById('row').value;
+    let cols = document.getElementById('col').value;
+    let matrix = [];
+
+    for(let rowIndex = 0; rowIndex < rows; rowIndex++) {
+      let currentRow = [];
+      let r = document.getElementById('zigzagTable').insertRow(rowIndex);
+      for(let colIndex = 0; colIndex < cols; colIndex++) {
+        let c = r.insertCell(colIndex)
+        // first, calculate numbers in 1st col
+        if(colIndex === 0) {
+          currentRow.push(rowIndex +1);
+          c.innerHTML = rowIndex + 1;
+        }
+        // calculate numbers in first row of table
+        else if(rowIndex === 0) {
+          // check if even or odd and use formulas for step 1
+          if(colIndex % 2 === 0) {
+            currentRow.push(rows * colIndex + 1)    //row*colIndex + 1
+            c.innerHTML = ows * colIndex + 1;
+          }
+          else {
+            currentRow.push(row * (colIndex+1) );
+            c.innerHTML = row * (colIndex+1);
+          }
+        }
+        // Finally, calculate numbers in all other columns
+        else {
+          if(colIndex % 2 === 0) {
+            currentRow.push(matrix[rowIndex - 1][colIndex] + 1);
+            c.innerHTML = matrix[rowIndex - 1][colIndex] + 1
+          }
+          else {
+            currentRow.push(matrix[rowIndex - 1][colIndex] - 1);
+            c.innerHTML = matrix[rowIndex - 1][colIndex] - 1;
+          }
+        }
+      }
+      matrix.push(currentRow)
+    }
+
+}
+</script>
