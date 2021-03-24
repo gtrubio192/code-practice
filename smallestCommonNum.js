@@ -25,5 +25,27 @@ var smallestCommonElement = function(mat) {
   }
   
   return -1
-
 };
+
+/**
+ * 
+ * Solution from video
+ * https://leetcode.com/problems/find-smallest-common-element-in-all-rows/solution/
+ * Time complexity: O(m*n*logn)
+ * space complexity: 1
+ */
+var smallestCommonElemBinarySearch = function(mat) {
+  let m = mat.length;
+  let n = mat[0].length;      // num of columns to search for aka first row
+  
+  for(let col = 0; col < n; col++) {
+      let found = true;
+      for(let row = 1; row < m && found; row++) {
+        // check to find first rows value inside of a row (obvi need to implement binary search)
+          found = binarySearch(mat[row], mat[0][col]) 
+      }
+      if(found) return mat[0][col]
+  }
+  
+  return -1
+}
