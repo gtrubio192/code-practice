@@ -3,7 +3,7 @@
  * @param {number[]} nums2
  * @return {number[]}
  */
-var intersect = function(nums1, nums2) {
+var intersect1 = function(nums1, nums2) {
   // create hash table for each array and tally number frequency
   // use smaller of hashs in for in loop
   //      check if num exists and if so pop in min frequency
@@ -32,3 +32,30 @@ var createHash = (array) => {
   }
   return hash;
 }
+
+
+// *************************************************
+// Similar, cleaner solution
+
+var intersect2 = function(nums1, nums2) {
+    
+  const intersect = [];
+  const hashMap = nums1.length > nums2.length ? createHash(nums2) : createHash(nums1)
+  nums2 = nums1.length > nums2.length ? nums1 : nums2;
+
+//check if hashMap includes elements from second array
+// if yes - push it to result array
+//    & decrement its count
+  for(let i = 0; i < nums2.length; i++){
+      if(hashMap[nums2[i]] > 0){
+         intersect.push(nums2[i]);
+         hashMap[nums2[i]] -= 1;
+      }
+  }
+  return intersect;
+};
+
+
+
+console.log(intersect1([1,2,2,1], [1,2,2,3]))
+console.log(intersect2([1,2,2,1], [1,2,2,3]))
