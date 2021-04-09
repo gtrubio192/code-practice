@@ -40,7 +40,9 @@ var createHash = (array) => {
 var intersect2 = function(nums1, nums2) {
     
   const intersect = [];
+  // create hash of smaller array
   const hashMap = nums1.length > nums2.length ? createHash(nums2) : createHash(nums1)
+  // put larger array as nums2
   nums2 = nums1.length > nums2.length ? nums1 : nums2;
 
 //check if hashMap includes elements from second array

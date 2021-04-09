@@ -1,6 +1,7 @@
 /**
  * 
-  Given two arrays A and B of equal size, the advantage of A with respect to B is the number of indices i for which A[i] > B[i].
+  Given two arrays A and B of equal size, the advantage of A with respect to B 
+  is the number of indices i for which A[i] > B[i].
   Return any permutation of A that maximizes its advantage with respect to B.
 
   Ex)
@@ -47,3 +48,44 @@ var advantageCount = function(A, B) {
   }
   return A;
 };
+
+// Alternate
+
+var advantageCount = function(A, B) {
+    // loop thru A,
+    // at each index, check if A[i] > B[i]
+    
+    for(let i=0; i < A.length; i++) {
+        // if A[i] < B[i], find first elem in A that is bigger than B[i]
+        let found = true
+        if(A[i] < B[i]) {
+            found = false;
+            let left = i +1,
+                right = A.length -1;
+
+            while(left < right && !found) {
+                // if somehow we have 2 bigger candidates
+                let temp = A[i];
+                if(A[left] > B[i] && A[right] > B[i]) {
+                    let idx = A[left] > A[right] ? right : left;
+                    A[i] = A[idx];
+                    A[idx] = temp;
+                    found = true;
+                }
+                else if(A[right] > B[i]) {
+                    A[i] = A[right];
+                    A[right] = temp;
+                    found = true;
+                }
+                else if(A[left] > B[i]) {
+                    A[i] = A[left];
+                    A[left] = temp;
+                    found = true;
+                }
+                left++;
+                right--;
+            }
+        }
+    }
+    return A;
+  };

@@ -37,6 +37,35 @@ function isValidYet(s) {
   return true;
 }
 
+// **********************************************************
+// More elegant solution of above, uses slight recursion since we just need to check if substrings are palis
+// **********************************************************
+var validPalindrome = function(s, corrections = 1) {
+  let lo = 0;
+  let hi = s.length - 1;
+  
+  while (lo < hi) {
+    // if recursive call is pali, everything after continue in while loop wont excecute
+    if (s[lo] === s[hi]) {
+      lo++;
+      hi--;
+      continue;
+    }
+    // In recursive call, if there is mismatch, return false
+    if (corrections === 0) {
+      return false;
+    }
+    // instead of creating a new function, just call itself again
+    // this time with 'corrections' to keep track of how many loops in we are. 
+    // Should only call itself once per call.
+    // Would need both calls to return false to know too many mismatches
+    return validPalindrome(s.slice(lo, hi), 0) 
+      || validPalindrome(s.slice(lo + 1, hi + 1), 0);
+  }
+  
+  return true;
+};
+
 // my submission (wrong on some edge cases)
 /**
  * @param {string} s
