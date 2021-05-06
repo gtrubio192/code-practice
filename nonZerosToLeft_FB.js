@@ -29,7 +29,7 @@ const nonZeroToLeft = (arr) => {
     }
   }
 
-  return left;
+  return [left, arr];
 }
 
 console.log(nonZeroToLeft([0, 1, 2, 0, 4, 0]))
