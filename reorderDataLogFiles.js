@@ -13,7 +13,6 @@ var reorderLogFiles = function(logs) {
   
   for(let i = 0; i < logs.length; i++) {
       let firstItem = logs[i].split(' ')[1];     
-      let idR = logs[i].split(' ')[0];
       if(isNaN(firstItem)) {
           lets.push(logs[i])
       }
@@ -109,3 +108,51 @@ var reorderLogFiles = function(logs) {
     })
     return [...letters, ...numbers]
 };
+
+
+const reorderPractice = (logs) => {
+    let lets = [], nums = [];
+
+    for(let i = 0; i < logs.length; i++) {
+        let item = logs[i].split(' ')
+        if(isNaN(item[1])) {
+            lets.push(logs[i]);
+        }
+        else {
+            nums.push(logs[i]);
+        }
+    }
+
+    lets.sort((a,b) => {
+        const aSpaceIdx = a.indexOf(' ');
+        const bSpaceIdx = b.indexOf(' ');
+
+        a = a.substr(aSpaceIdx);
+        b = b.substr(bSpaceIdx);
+        let aId = a.substr(0, aSpaceIdx);
+        let bId = b.substr(0, bSpaceIdx);
+
+        if(a > b) {
+            return 1;
+        }
+        else if(a < b) {
+            return -1;
+        }
+        else if(a === b) {
+            if(aId > bId) {
+                return 1;
+            }
+            else if(aId < bId) {
+                return -1
+            }
+            return 0;
+        }
+
+    });
+
+    return [...lets, ...nums]
+}
+
+let log = ["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"];
+
+console.log(reorderPractice(log));

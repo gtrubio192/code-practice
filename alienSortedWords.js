@@ -9,7 +9,7 @@
 
 // Game plan: 
 // create hash of alien alphabet using FOR loop with key=letter, val=idx
-// create less than or equal to function (for every adjacent words). Check words letter by letter
+// create less than or equal to function (for each adjacent words). Check words letter by letter
 // using our hash -> hash[a[i]] < hash[b[i]]
 // loop thru adjacent pairs
 
