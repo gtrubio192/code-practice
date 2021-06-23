@@ -1,7 +1,9 @@
 // https://leetcode.com/problems/leftmost-column-with-at-least-a-one/
-// A row-sorted binary matrix means that all elements are 0 or 1 and each row of the matrix is sorted in non-decreasing order.
+// A row-sorted binary matrix means that all elements are 0 or 1
+// and each row of the matrix is sorted in non-decreasing order.
 
-// Given a row-sorted binary matrix binaryMatrix, return the index (0-indexed) of the leftmost column with a 1 in it. If such an index does not exist, return -1.
+// Given a row-sorted binary matrix binaryMatrix, return the index (0-indexed)
+// of the leftmost column with a 1 in it. If such an index does not exist, return -1.
 
 // You can't access the Binary Matrix directly. You may only access the matrix using a BinaryMatrix interface:
 // ex) Input: mat = [[0,0,0,1],[0,0,1,1],[0,1,1,1]]

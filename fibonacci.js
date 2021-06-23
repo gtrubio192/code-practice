@@ -4,7 +4,22 @@ var fib = function(n) {
   return fib(n-1) + fib(n-2)
 };
 
-// Dynamic programming solution
+// Dynamic programming solution 1 - uses less memory
+var fib = function(n) {
+  if (n === 0)    return 0;
+  if (n < 2) return 1;
+  
+  let dp = [0, 1];
+  for (let i = 2; i <= n; i++) {
+      dp[2] = dp[1] + dp[0];
+      dp[0] = dp[1];
+      dp[1] = dp[2];
+  }
+  
+  return dp[2]
+};
+
+// Dynamic programming solution 2
 var fib = function(n) {
     // start fib sequence with first 2 numbers
     let dp = [0, 1]
