@@ -21,6 +21,7 @@
 // Pop out all these elements from the queue and add them into the current level.
 // Push their child nodes into the queue for the next level.
 // Go to the next level level++
+// Input: [3,9,20,null,null,15,7]
 
 var levelOrder = function(root) {
   let queue = [];
@@ -52,3 +53,26 @@ var levelOrder = function(root) {
   }
   return levels;
 };
+
+
+// Recursive Approach
+
+let levels = [];
+const helper = (node, level) => {
+  // initialize new arr at new level
+  // levels.length will equal whatever level the first time a new level is called
+  // ex) after root is added to levels, levels.length == 1. Next time recur happens
+  //    from line 70, level is incremented and will equal levels.length
+  if(levels.length === level) {
+    levels[level] = [];
+  }
+  levels[level].push(node.val);
+  if(node.left) helper(node.left, level + 1);
+  if(node.right)  helper(node.right, level + 1);
+}
+
+const levelOrderRecur = root => {
+  if(!root) return levels;
+  helper(root, 0);
+  return levels;
+}
