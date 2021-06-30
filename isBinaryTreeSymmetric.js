@@ -14,7 +14,7 @@ and t1.right and t2.left are symmetric.
 The two-step definition: two binary trees t1 and t2 are symmetric if the reverse of t2 is equal to t1.
  */
 
- // Purely recursive 
+ // Purely recursive - Time and space O(n)
 function isSymmetric(root) {
   // Check root.left, root.right, return true if symmetric
   return isSymmetricHelper(root.left, root.right);
@@ -27,7 +27,7 @@ function isSymmetricHelper(t1, t2) {
   if (t1 == null || t2 == null) {
     return false;
   }
-  return isSymmetricHelper(t1.left, t2.right) &&
+  return (t1.val === t2.val) && isSymmetricHelper(t1.left, t2.right) &&
     isSymmetricHelper(t1.right, t2.left);
 }
 

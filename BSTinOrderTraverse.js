@@ -28,3 +28,27 @@ const inOrderIter = root => {
   return output;
 
 }
+
+
+
+
+
+// practice
+const inOrderIter = root => {
+  let output = [],
+      stack = [];
+
+  // forgot if(!root) return output;
+  
+  let curr = root;
+  while(curr || stack.length) {
+    while(curr) {
+      stack.push(curr);
+      curr = curr.left;
+    }
+    curr = stack.pop();
+    output.push(curr.val);
+    curr = curr.right;
+  }
+  return output;
+}

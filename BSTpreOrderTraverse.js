@@ -60,3 +60,25 @@ const preOrderIter = (root) => {
   }
   return output;
 }
+
+// practice
+const preOrderIter = (root) => {
+  let stack = [],
+      output = [];
+
+  if(!root) return output;
+  stack.push(root);
+
+  while(stack.length) {
+    let node = stack.pop();
+    output.push(node.val);    // root
+    if(node.right) {          // right - push into stack first, processed last
+      stack.push(node.right);
+    }
+    if(node.left) {
+      stack.push(node.left);  // left - push into stack last, processed first
+    }
+  }
+
+  return output;
+}
