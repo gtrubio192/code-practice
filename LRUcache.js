@@ -26,3 +26,19 @@ LRUCache.prototype.put = function(key, value) {
   
   this.cache.set(key, value);
 };
+
+
+
+// Free recall
+
+const LRUCache = function(capacity) {
+  
+};
+
+LRUCache.prototype.get = function(key) {
+
+};
+
+LRUCache.prototype.put = function(key, value) {
+
+};

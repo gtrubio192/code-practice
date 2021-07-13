@@ -39,10 +39,6 @@ const isRobotBounded = (instructions) => {
 }
 
 
-
-
-
-
 // Original code, way off with only counting frequencies of instructions
 
 // getting palindrome vibes - if instructions pali then return true
@@ -82,3 +78,50 @@ var isRobotBounded = function(instructions) {
       }
   }
 };
+
+
+// Free recall
+
+// On a coordinate plane system, there are points and directions(north,south,east,west) to account for
+// directions (north 0, east 1, south 2, west 3) - make a dictionary going clockwise starting at north
+// We start at (0,0)
+// I know from 'trajectory attractor' that after 1 cycle, we can determine a closed circle
+// if the robot is NOT facing north (and another condition...?)
+
+const isRobotBounded = (instructions) => {
+  // directions dictionary
+  const directions = [
+    [0, 1],       // north - 0
+    [1, 0],       // east/right - 1
+    [0, -1],     // south - 2
+    [-1, 0]      // west/left - 3
+  ];
+  let direction = 0;
+  let position = [0,0];
+  // loop that does 1 pass thru instructions
+  for(let i = 0; i < instructions.length; i++) {
+    // need to know what direction were facing on each iteration
+    if(instructions[i] === 'G') {
+      let move = directions[direction]
+      let [x,y] = position;
+      position = [move[0] + x, move[1] + y];
+    }
+    // Extra scenario if reverse is an option, B = back
+    else if(instructions[i] === 'B') {
+      let backItUp = directions[(direction + 2) % 4];
+      let [x,y] = position;
+      position = [backItUp[0] + x, backItUp[1] + y];
+    }
+    else if(instructions[i] === 'R') {
+      direction = (direction + 1) % 4;
+    }
+    else {
+      direction = (direction + 3) % 4;
+    }
+  }
+
+  // CORRECTION: Close, but other condition would be if robot returned to original position, (0,0)
+  // return direction !== 0 || (position[0] === 0 && position[1] === 0);      // correct full answer
+  return direction !== 0;   // initial answer
+
+}

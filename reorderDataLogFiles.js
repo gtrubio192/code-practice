@@ -156,3 +156,66 @@ const reorderPractice = (logs) => {
 let log = ["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"];
 
 console.log(reorderPractice(log));
+
+// Free recall
+
+// Can assume that the identifiers can be a combo of letters/numbers/uppercase
+// reorder logs so that letter logs come first and ordered lexigraphically, digit logs retain relative order
+// if letter log is same lexi, then order lexig by their identifier - use 'localeCompare' function or manual sorting
+// Input: logs = ["a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"]
+// Time: O(n + klogk), n = logs size, k = letters size, logk = sortings
+var reorderLogFiles = function(logs) {
+    // First thought is to separate into letter and digit arrays
+    let letters = [],
+        digits = [];
+
+    logs.forEach(log => {
+        // check if first token is a word
+        if ( isNaN(log.split(' ')[1]) ) {
+            letters.push(log);
+        }
+        else {
+            digits.push(log);
+        }
+    });
+
+    letters.sort((a,b) => {
+        // CORRECTION: need to further split a and b to get thier values, this only pops off ids
+        // but a and b stay the same, aka a = "g1 act car"
+        // Use indexOf(' ') and split or substring to properly break up ids and logs
+        let aIdx = a.indexOf(' ');
+        let bIdx = b.indexOf(' ');
+        
+        let id1 = a.split(' ').shift();
+        let id2 = b.split(' ').shift();
+        a = a.split(' ').slice(aIdx).join(' ');
+        b = b.split(' ').slice(bIdx).join(' ');
+
+        // CORRECTION: a needs to be greater than b to return a positive value
+        // arr.sort((a,b) => a - b)     - this sorts in increasing/lexi order, a > b in order to get (+) return val
+        // if(a > b)
+        if(a < b) {
+            return 1;
+        }
+        // CORRECTION: 
+        // if(b > a)
+        else if(a > b) {
+            return -1;
+        }
+        else if(a === b) {
+            // CORRECTION: Same as above
+            if(id1 < id2) {
+                return 1;
+            }
+            else if(id1 > id2) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+    });
+
+    return [...letters, ...digits];
+
+}
