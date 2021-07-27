@@ -3,6 +3,11 @@
 // Given an array of integers jobDifficulty and an integer d. The difficulty of the i-th job is jobDifficulty[i].
 // Return the minimum difficulty of a job schedule. If you cannot find a schedule for the jobs return -1.
 
+/*
+  Rephrasing:
+    Given an array, cut it into d contiguous subarrays and return
+    the min sum of the max of each subarray
+*/
 
 // Explaination and code: 
 // https://leetcode.com/problems/minimum-difficulty-of-a-job-schedule/discuss/944828/Short-DP-solution-with-highly-detailed-step-by-step-explanation
@@ -10,11 +15,14 @@ const minDifficulty = (A, D) => {
   let n = A.length, inf = Infinity, maxd;
   
   if (n < D) return -1;
-  
+  // use
   let dp = new Array(n + 1).fill(Infinity);
   dp[n] = 0;
   
+  // outer loop: cycling thru num of days
   for (let d = 1; d <= D; d++) {
+      // 2nd loop: cycling number of cuts according to how many days remain
+      // the less days, the less amount of cuts
       for (let i = 0; i <= n - d; i++) {
           maxd = 0, dp[i] = inf;
 
@@ -27,6 +35,45 @@ const minDifficulty = (A, D) => {
   
   return dp[0];
 }
+
+
+// Solution from: https://www.youtube.com/watch?v=pmQAtRZ3CuE
+// Make use of DFS to do the job
+// O(N*N*d) time, O(N*d) space
+const minDifficulty = (jobDifficulty, d) => {
+  if(d > jobDifficulty.length)  return -1;
+  // Use d + 1 because d(days) starts as a real world 1
+  let dp = [...Array(d + 1)].map(x=>Array(jobDifficulty.length).fill(-1));
+  // DFS - tries every single combination of cuts. Start at index 0
+  return dfs(jobDifficulty, d , dp, 0);
+}
+
+const dfs = (jobDifficulty, d, dp, idx) => {
+  const len = jobDifficulty.length;
+  // base case: if d = 1, return max of whats left in subarray bc dont want to make to many subarrs
+  if(d === 1) {
+    let max = 0;
+    while(idx < len) {
+      // finds max val of remaining subarrs
+      max = Math.max(max, jobDifficulty[idx++]);
+    }
+    return max;
+  }
+  // now check if this value has been changed in the past, if so return its value
+  if(dp[d][idx] !== -1)   return dp[d][idx];
+
+  // Now check every combination of subarrays at every possible cut
+  // len - d + 1 ==> to ensure theres enough room at end of array to make all cuts
+  let max = 0;
+  let res = Number.MAX_SAFE_INTEGER;
+  for(let i = idx; i < len - d + 1; i++) {
+    max = Math.max(max, jobDifficulty[i]);
+    res = Math.min(res, max + dfs(jobDifficulty, d - 1, dp, i + 1))
+  }
+  return dp[d][idx] = res;
+}
+
+// **************************************************
 
 
 // Orignal Solution using min heaps, wrong for some test cases

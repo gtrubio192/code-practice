@@ -31,3 +31,38 @@ let heap = new MinHeap(compare);
 heap.insert(666)
 console.log('First element ', heap.peek());
 console.log('Heap size ', heap.size);
+
+class MinHeap {
+  constructor(compare) {
+    this.heap = [];
+    this.compare = (a,b) => a - b;
+  }
+  insert(num) {
+    let start = 0,
+      end = this.heap.length();
+    // binary search + insertion sort
+    while(start < end) {
+      let mid = (end + start) >> 1;
+      if(num > this.heap[mid]) {
+        start = mid + 1;
+      }
+      else {
+        end = mid;
+      }
+    }
+    this.heap.splice(start, 0, num)
+
+    // this.heap.push(num);
+    // this.heap.sort(this.compare);
+  }
+  extract() {
+    if(this.heap.length === 0)  return null;
+    return this.heap.shift();
+  }
+  peek() {
+    return this.heap[0];
+  }
+  get size() {
+    return this.heap.length;
+  }
+}

@@ -19,8 +19,16 @@ var criticalConnections = function(n, connections) {
   // Note: If we start time at 1 instead of 0, we can use either disc or low as a visited array, 
   // rather than having to keep a separate array for the purpose. Any non-zero value in the 
   // chosen array will then represent a visited state for the given node.
+  // Note: Uint32Array is similar to an Array where each item is a 32 bit (4 byte) unsigned integer. 
+  //        Uint32Arrays cannot change size after creation. 
+  //        array-like objects that provide a mechanism for reading and writing raw binary data in memory buffers.
+  //        as web applications become more and more powerful, adding features such as audio and video manipulation, 
+  //        access to raw data using WebSockets, and so forth, it has become clear that there are times when
+  //        it would be helpful for JavaScript code to be able to quickly and easily manipulate raw binary data. 
+  //            This is where typed arrays come in. Each entry in a JavaScript typed array is a raw binary value in one of a number of supported formats, 
+  //          from 8-bit integers to 64-bit floating-point numbers.
   let time = 1, 
-      discovery = new Uint32Array(n),
+      discovery = new Uint32Array(n),   // size cant change fot Uint32Array.
       low = new Uint32Array(n),
       bridges = [];
   
